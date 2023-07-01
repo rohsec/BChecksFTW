@@ -1,0 +1,26 @@
+metadata:
+    language: v1-beta
+    name: "Host Header Injection"
+    description: "Host Header Injection"
+    author: "@hackinsec"
+
+given request then
+    send request:
+        headers:
+            "Host": {generate_collaborator_address()}
+            "X-Forwarded-For": {generate_collaborator_address()}
+            "X-Forwarded": {generate_collaborator_address()}
+            "Forwarded-For": {generate_collaborator_address()}
+            "Forwarded": {generate_collaborator_address()}
+            "X-Forwarded-Host": {generate_collaborator_address()}
+            "X-Originating-IP": {generate_collaborator_address()}
+            "X-Host": {generate_collaborator_address()}
+
+
+
+    if http interactions then
+        report issue:
+            severity: low
+            confidence: certain
+            detail: "Host Header Injection detected"
+    end if
